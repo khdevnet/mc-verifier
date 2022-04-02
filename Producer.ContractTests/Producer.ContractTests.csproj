@@ -26,7 +26,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Core\Core.csproj" />
-    <ProjectReference Include="..\JsonDataGeneratorUtils\JsonDataGeneratorUtils.csproj" />
     <ProjectReference Include="..\Producer\Producer.csproj" />
   </ItemGroup>
 

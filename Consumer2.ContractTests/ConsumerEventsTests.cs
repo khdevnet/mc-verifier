@@ -1,7 +1,8 @@
 using ApprovalTests;
 using ApprovalTests.Reporters;
-using Events.Core;
+using Core;
 using NJsonSchema;
+using System.IO;
 using Xunit;
 using Xunit.Abstractions;
 
@@ -22,7 +23,11 @@ namespace Consumer2.ContractTests
 
             Approvals.VerifyJson(schemaJson);
 
-            Utils.SaveSchema(schemaJson, "ConsumerContracts//Consumer2", nameof(UserCreatedEvent));
+            var contractsFolder = Path.Combine(
+               FileUtils.GetSolutionDirectory(),
+               "ConsumerContracts//Consumer2");
+
+            new FileSchema(contractsFolder, typeof(UserCreatedEvent).Name).Save(schemaJson);
         }
     }
 }

@@ -1,4 +1,4 @@
-using Events.Core;
+using Core;
 using NJsonSchema;
 using NJsonSchema.Validation;
 using System.Collections.Generic;
@@ -35,9 +35,11 @@ namespace Producer.ContractTests
         {
             Type[] eventsType = GetClassTypes("Producer", "Event");
 
-            var consumerContractsDirectory = Path.Combine(Utils.GetSolutionDirectory(), ConsumerContracts);
+            var consumerContractsDirectory = Path.Combine(
+                FileUtils.GetSolutionDirectory(),
+                ConsumerContracts);
 
-            var schemasDict = Utils.GetFilesByPattern(consumerContractsDirectory, $"*{SchemaSuffix}.json");
+            var schemasDict = FileUtils.GetFilesByPattern(consumerContractsDirectory, $"*{SchemaSuffix}.json");
 
             var groupedPathsBySchemaName = GroupByValue(schemasDict);
 
@@ -90,7 +92,7 @@ namespace Producer.ContractTests
 
             foreach (var schemaFilePath in schemasByTypeName)
             {
-                var sampleData = DataGenerator.Get(schemaFilePath);
+                var sampleData = AutoDataGenerator.Get(schemaFilePath);
 
                 var sampleDataObj = JsonSerializer.Deserialize(sampleData, eventType);
 
