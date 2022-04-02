@@ -9,7 +9,7 @@
 
   <ItemGroup>
     <PackageReference Include="ApprovalTests" Version="5.7.2" />
-    <PackageReference Include="JsonSchema.Net.Data" Version="1.0.5" />
+    <PackageReference Include="LightBDD.XUnit2" Version="3.4.1" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.11.0" />
     <PackageReference Include="NJsonSchema" Version="10.6.10" />
     <PackageReference Include="NJsonSchema.CodeGeneration" Version="10.6.10" />
@@ -25,9 +25,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Consumer2\Consumer2.csproj" />
     <ProjectReference Include="..\Core\Core.csproj" />
-    <ProjectReference Include="..\JsonDataGeneratorUtils\JsonDataGeneratorUtils.csproj" />
-    <ProjectReference Include="..\Producer\Producer.csproj" />
   </ItemGroup>
 
 </Project>

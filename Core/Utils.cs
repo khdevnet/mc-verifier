@@ -27,6 +27,12 @@
             return Enumerable.Range(1, deep).Select(c => @"..\");
         }
 
+        /// <param name="pattern">"*{pattern}.json"</param>
+        /// <returns></returns>
+        public static Dictionary<string, string> GetFilesByPattern(string rootPath, string pattern)
+            => Directory.GetFiles(rootPath, pattern, new EnumerationOptions { RecurseSubdirectories = true })
+            .ToDictionary(path => path, path => Path.GetFileNameWithoutExtension(path));
+
         public static void SaveSchema(string schemaJson, string folderName, string modelName)
         {
             var solutionDirectory = Utils.GetSolutionDirectory();

@@ -1,0 +1,33 @@
+﻿{
+    
+  "$schema":  "http://json-schema.org/draft-04/schema#",
+    
+  "title":  "UserCreatedEvent",
+    
+  "type":  "object",
+    
+  "additionalProperties":  false,
+    
+  "required":  [
+        
+    "Id"
+  
+    ],
+    
+  "properties":  {
+        
+    "Id":  {
+            
+      "type":  "integer",
+            
+      "format":  "int32",
+            
+      "maximum":  10.0,
+            
+      "minimum":  0.0
+    
+        }
+  
+    }
+
+}

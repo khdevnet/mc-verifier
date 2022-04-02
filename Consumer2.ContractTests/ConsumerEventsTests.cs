@@ -5,7 +5,7 @@ using NJsonSchema;
 using Xunit;
 using Xunit.Abstractions;
 
-namespace Consumer.ContractTests
+namespace Consumer2.ContractTests
 {
     [UseReporter(typeof(VisualStudioReporter))]
     public class Schemas
@@ -22,7 +22,7 @@ namespace Consumer.ContractTests
 
             Approvals.VerifyJson(schemaJson);
 
-            Utils.SaveSchema(schemaJson, "ConsumerContracts", nameof(UserCreatedEvent));
+            Utils.SaveSchema(schemaJson, "ConsumerContracts//Consumer2", nameof(UserCreatedEvent));
         }
     }
 }
