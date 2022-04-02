@@ -6,8 +6,6 @@
     
   "type":  "object",
     
-  "additionalProperties":  false,
-    
   "required":  [
         
     "Id"

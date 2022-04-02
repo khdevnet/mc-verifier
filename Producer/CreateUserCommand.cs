@@ -2,7 +2,7 @@
 
 namespace Producer
 {
-    public class UserCreatedEvent
+    public class CreateUserCommand
     {
         [Required]
         [Range(0, 10)]

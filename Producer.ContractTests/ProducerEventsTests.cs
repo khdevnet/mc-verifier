@@ -7,9 +7,7 @@ using System.Linq;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Xunit;
-using System.Reflection;
 using System;
-using Producer.ContractTests;
 using Xunit.Abstractions;
 using System.Text.Json.Serialization;
 
@@ -22,90 +20,47 @@ namespace Producer.ContractTests
     public class ProducerEventsTests
     {
         private const string ConsumerContracts = "ConsumerContracts";
-        private const string SchemaSuffix = ".schema";
         private readonly ITestOutputHelper _logger;
 
         public ProducerEventsTests(ITestOutputHelper logger)
-        {
-            _logger = logger;
-        }
+            => _logger = logger;
 
         [Fact]
-        public async Task UserCreatedEvent_ContractValidation()
+        public void MessagesValidation()
         {
-            Type[] eventsType = GetClassTypes("Producer", "Event");
+            var eventsType = ReflectionUtils.FindTypes("^Producer.*Event$", "^Producer.*Command$");
 
             var consumerContractsDirectory = Path.Combine(
                 FileUtils.GetSolutionDirectory(),
                 ConsumerContracts);
 
-            var schemasDict = FileUtils.GetFilesByPattern(consumerContractsDirectory, $"*{SchemaSuffix}.json");
-
-            var groupedPathsBySchemaName = GroupByValue(schemasDict);
-
-            var groupedPathsByTypeName = groupedPathsBySchemaName.ToDictionary(x => RemoveSuffix(x.Key, SchemaSuffix), x => x.Value);
+            var groupedPathsByTypeName = MessageSchemaFinder.Find(consumerContractsDirectory);
 
             foreach (var eventType in eventsType)
             {
-                await ValidateEvent(eventType, groupedPathsByTypeName);
+                AssertSchema(eventType, groupedPathsByTypeName);
             }
         }
 
-        private static string RemoveSuffix(string text, string suffix)
+        private void AssertSchema(Type eventType, Dictionary<string, IReadOnlyCollection<MessageSchema>> groupedPathsByTypeName)
         {
-            var suffixIndex = text.IndexOf(suffix);
+            var schemasByTypeName = groupedPathsByTypeName.GetValueOrDefault(eventType.Name) ?? new List<MessageSchema>();
 
-            var newstr = text.Remove(suffixIndex);
-            return newstr;
-
-        }
-
-        private static Dictionary<string, List<string>> GroupByValue(Dictionary<string, string> schemasDict)
-        {
-            var groupedPathsBySchemaName = new Dictionary<string, List<string>>();
-            foreach (var keyValue in schemasDict)
+            foreach (var schema in schemasByTypeName)
             {
-                if (!groupedPathsBySchemaName.ContainsKey(keyValue.Value))
-                {
-                    groupedPathsBySchemaName[keyValue.Value] = new List<string>();
-                }
-
-                groupedPathsBySchemaName[keyValue.Value].Add(keyValue.Key);
-            }
-            return groupedPathsBySchemaName;
-        }
-
-        private Type[] GetClassTypes(string namespacePrefix, string typeSuffix)
-        {
-            Assembly[] assemblies = AppDomain.CurrentDomain
-                .GetAssemblies()
-                .Where(t => t.FullName.StartsWith(namespacePrefix))
-                .ToArray();
-
-            var eventsType = assemblies.SelectMany(assembl => GetTypesBySuffix(assembl, typeSuffix)).ToArray();
-            return eventsType;
-        }
-
-        private async Task ValidateEvent(Type eventType, Dictionary<string, List<string>> groupedPathsByTypeName)
-        {
-            var schemasByTypeName = groupedPathsByTypeName.GetValueOrDefault(eventType.Name) ?? new List<string>();
-
-            foreach (var schemaFilePath in schemasByTypeName)
-            {
-                var sampleData = AutoDataGenerator.Get(schemaFilePath);
-
-                var sampleDataObj = JsonSerializer.Deserialize(sampleData, eventType);
-
-                var errors = await Validate(schemaFilePath, sampleDataObj);
+                var errors = schema.Validate(eventType);
 
                 if (errors.Any())
                     _logger.WriteLine(SerializeErrors(errors));
 
-                Assert.False(errors.Any(), $"Validation failed for: {eventType.FullName}");
+                Assert.False(errors.Any(),
+                    $"Validation failed: {Environment.NewLine}" +
+                    $"Event type: {eventType.FullName} {Environment.NewLine}" +
+                    $"Schema Path: {schema.FullPath}");
             }
         }
 
-        private static string SerializeErrors(ICollection<ValidationError> errors)
+        private static string SerializeErrors(IReadOnlyCollection<MessageSchemaValidationError> errors)
             => JsonSerializer.Serialize(
                 errors,
                 new JsonSerializerOptions()
@@ -122,14 +77,6 @@ namespace Producer.ContractTests
 
             var errors = schema.Validate(jsonString);
             return errors;
-        }
-
-        private Type[] GetTypesBySuffix(Assembly assembly, string suffix)
-        {
-            return
-              assembly.GetTypes()
-                      .Where(t => t.FullName.EndsWith(suffix))
-                      .ToArray();
         }
     }
 }

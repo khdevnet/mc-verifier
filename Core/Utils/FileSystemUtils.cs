@@ -22,8 +22,8 @@
 
         /// <param name="pattern">"*{pattern}.json"</param>
         /// <returns></returns>
-        public static Dictionary<string, string> GetFilesByPattern(string rootPath, string pattern)
+        public static IReadOnlyCollection<string> GetFilesByPattern(string rootPath, string pattern)
             => Directory.GetFiles(rootPath, pattern, new EnumerationOptions { RecurseSubdirectories = true })
-            .ToDictionary(path => path, path => Path.GetFileNameWithoutExtension(path));
+            .ToReadOnly();
     }
 }

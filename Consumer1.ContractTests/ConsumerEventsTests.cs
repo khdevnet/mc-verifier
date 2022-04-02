@@ -4,30 +4,25 @@ using Core;
 using NJsonSchema;
 using System.IO;
 using Xunit;
-using Xunit.Abstractions;
 
 namespace Consumer1.ContractTests
 {
     [UseReporter(typeof(VisualStudioReporter))]
     public class Schemas
     {
-        private readonly ITestOutputHelper _logger;
-
-        public Schemas(ITestOutputHelper logger)
-            => _logger = logger;
-
         [Fact]
         public void UserCreatedEvent()
         {
-            var schemaJson = JsonSchema.FromType<UserCreatedEvent>().ToJson();
+            var schema = MessageSchema
+                 .Create(typeof(UserCreatedEvent));
 
-            Approvals.VerifyJson(schemaJson);
+            Approvals.VerifyJson(schema.Json);
 
             var contractsFolder = Path.Combine(
                 FileUtils.GetSolutionDirectory(),
                 "ConsumerContracts//Consumer1");
 
-            new FileSchema(contractsFolder, typeof(UserCreatedEvent).Name).Save(schemaJson);
+            schema.Save(contractsFolder);
         }
     }
 }

@@ -9,6 +9,7 @@
   <ItemGroup>
     <PackageReference Include="JsonSchema.Net.Data" Version="1.0.5" />
     <PackageReference Include="JsonSchema.Net.DataGeneration" Version="0.1.1" />
+    <PackageReference Include="NJsonSchema" Version="10.6.10" />
   </ItemGroup>
 
 </Project>
