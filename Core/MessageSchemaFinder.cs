@@ -4,16 +4,15 @@
     {
         private const string _pattern = $"*{MessageSchema.Extension}";
 
-        public static Dictionary<string, IReadOnlyCollection<MessageSchema>> Find(string consumerContractsDirectory)
+        public static async Task<Dictionary<string, IReadOnlyCollection<MessageSchema>>> FindAsync(string consumerContractsDirectory)
         {
-            var schemas = FileUtils
+            var schemas = await Task.WhenAll(FileUtils
                 .GetFilesByPattern(consumerContractsDirectory, _pattern)
-                .Select(path => MessageSchema.Create(path))
-                .ToReadOnly();
+                .Select(path => MessageSchema.CreateAsync(path)));
 
             var groupedByTypeName = GroupByTypeName(schemas);
 
-            
+
             return groupedByTypeName;
         }
 

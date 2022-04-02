@@ -26,7 +26,7 @@ namespace Producer.ContractTests
             => _logger = logger;
 
         [Fact]
-        public void MessagesValidation()
+        public async Task MessagesValidation()
         {
             var eventsType = ReflectionUtils.FindTypes("^Producer.*Event$", "^Producer.*Command$");
 
@@ -34,7 +34,7 @@ namespace Producer.ContractTests
                 FileUtils.GetSolutionDirectory(),
                 ConsumerContracts);
 
-            var groupedPathsByTypeName = MessageSchemaFinder.Find(consumerContractsDirectory);
+            var groupedPathsByTypeName = await MessageSchemaFinder.FindAsync(consumerContractsDirectory);
 
             foreach (var eventType in eventsType)
             {

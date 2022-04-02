@@ -12,28 +12,32 @@ namespace Core
         private readonly string _schemaJson;
         private readonly JsonSchema _schema;
 
-        private MessageSchema(string fullPath)
+        private MessageSchema(string fullPath, JsonSchema schema)
         {
             _consumerContractsDirectory = Path.GetDirectoryName(fullPath);
             _typeName = GetTypeNameFromPath(fullPath);
-            _schema = JsonSchema.FromFileAsync(fullPath).GetAwaiter().GetResult();
+            _schema = schema;
             _schema.AllowAdditionalProperties = true;
             _schemaJson = _schema.ToJson();
         }
 
         private MessageSchema(Type type)
         {
-            _schema = JsonSchema.FromType(type);
-            _schema.AllowAdditionalProperties = true;
+            var schema = JsonSchema.FromType(type);
+            schema.AllowAdditionalProperties = true;
+            _schema = schema;
+            _schemaJson = schema.ToJson();
             _typeName = type.Name;
-            _schemaJson = _schema.ToJson();
         }
 
         public static MessageSchema Create(Type type)
             => new MessageSchema(type);
 
-        public static MessageSchema Create(string fullPath)
-           => new MessageSchema(fullPath);
+        public static async Task<MessageSchema> CreateAsync(string fullPath)
+        {
+            var schema = await JsonSchema.FromFileAsync(fullPath);
+            return new MessageSchema(fullPath, schema);
+        }
 
         public string Json
             => _schemaJson;
@@ -41,23 +45,23 @@ namespace Core
         public string FullPath
             => GetFullPath(_consumerContractsDirectory);
 
-        private string GetFullPath(string consumerContractsDirectory)
-            => Path.Combine(consumerContractsDirectory, GetFileName());
-
         public string TypeName => _typeName;
+
+        public string CreateSample()
+           => AutoDataGenerator.GetFromJsonSchema(Json);
 
         public IReadOnlyCollection<MessageSchemaValidationError> Validate(Type type)
         {
-            var sampleJsonData = AutoDataGenerator.GetFromJsonSchema(Create(type).Json);
-            var errors = _schema.Validate(sampleJsonData);
-
-            return errors.Select(e => ToError(e)).ToReadOnly();
+            var sampleJsonData = Create(type).CreateSample();
+            return _schema.Validate(sampleJsonData)
+                .Select(e => ToError(e)).ToReadOnly();
         }
 
         private static MessageSchemaValidationError ToError(ValidationError e)
-        {
-            return new MessageSchemaValidationError(e.Kind.ToString(), e.Property, e.Path, e.LineNumber, e.LinePosition);
-        }
+            => new MessageSchemaValidationError(e.Kind.ToString(), e.Property, e.Path, e.LineNumber, e.LinePosition);
+
+        private string GetFullPath(string consumerContractsDirectory)
+            => Path.Combine(consumerContractsDirectory, GetFileName());
 
         private string GetFileName()
             => $"{_typeName}{Suffix}.json";
@@ -77,7 +81,6 @@ namespace Core
             => RemoveSuffix(
                 Path.GetFileNameWithoutExtension(fullPath),
                 Suffix);
-
 
         private static string RemoveSuffix(string text, string suffix)
         {
