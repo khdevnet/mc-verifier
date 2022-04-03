@@ -12,7 +12,6 @@
   <PropertyGroup>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <!-- Do not include the generator as a lib dependency -->
-    <IncludeBuildOutput>false</IncludeBuildOutput>
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>https://github.com/khdevnet/mc-verifier</RepositoryUrl>
     <PackageProjectUrl>https://github.com/khdevnet/mc-verifier</PackageProjectUrl>
