@@ -3,15 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.1.32319.34
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Core", "Core\Core.csproj", "{2E7483D7-F12E-4FC7-8D11-9173DCD23672}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Producer", "Producer\Producer.csproj", "{05014748-219D-45CF-87CC-5509F5363716}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Producer.ContractTests", "Producer.ContractTests\Producer.ContractTests.csproj", "{5CA7F2BD-4FC1-4FDF-B2B0-FB0C993C3D3B}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Consumer1", "Consumer1", "{90DA5C6B-69FD-4815-97CC-7AFD310C7B8D}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Common", "Common", "{B68EA97E-A354-4F63-890A-786AC15F4A88}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Consumer1", "Consumer1\Consumer1.csproj", "{A7024D58-D5FE-4C0C-8D90-41B5F7905B02}"
 EndProject
@@ -23,16 +19,23 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Consumer2", "Consumer2\Cons
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Consumer2.ContractTests", "Consumer2.ContractTests\Consumer2.ContractTests.csproj", "{ED991A93-6D3B-4AC4-B2A6-279E3AD76C88}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "McVerifier", "McVerifier\McVerifier.csproj", "{C4EF9746-CDAE-4866-B963-50087B4F9E4D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Example", "Example", "{6FB844EB-AE25-4D12-BA54-FEDB9A69AF75}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{F7A9A2FD-2240-45B6-BDB4-9336B81CAED3}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+		.ruleset = .ruleset
+		Directory.Build.props = Directory.Build.props
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{2E7483D7-F12E-4FC7-8D11-9173DCD23672}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2E7483D7-F12E-4FC7-8D11-9173DCD23672}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2E7483D7-F12E-4FC7-8D11-9173DCD23672}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2E7483D7-F12E-4FC7-8D11-9173DCD23672}.Release|Any CPU.Build.0 = Release|Any CPU
 		{05014748-219D-45CF-87CC-5509F5363716}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{05014748-219D-45CF-87CC-5509F5363716}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{05014748-219D-45CF-87CC-5509F5363716}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -57,14 +60,21 @@ Global
 		{ED991A93-6D3B-4AC4-B2A6-279E3AD76C88}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ED991A93-6D3B-4AC4-B2A6-279E3AD76C88}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{ED991A93-6D3B-4AC4-B2A6-279E3AD76C88}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C4EF9746-CDAE-4866-B963-50087B4F9E4D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C4EF9746-CDAE-4866-B963-50087B4F9E4D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C4EF9746-CDAE-4866-B963-50087B4F9E4D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C4EF9746-CDAE-4866-B963-50087B4F9E4D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{2E7483D7-F12E-4FC7-8D11-9173DCD23672} = {B68EA97E-A354-4F63-890A-786AC15F4A88}
+		{05014748-219D-45CF-87CC-5509F5363716} = {6FB844EB-AE25-4D12-BA54-FEDB9A69AF75}
+		{5CA7F2BD-4FC1-4FDF-B2B0-FB0C993C3D3B} = {6FB844EB-AE25-4D12-BA54-FEDB9A69AF75}
+		{90DA5C6B-69FD-4815-97CC-7AFD310C7B8D} = {6FB844EB-AE25-4D12-BA54-FEDB9A69AF75}
 		{A7024D58-D5FE-4C0C-8D90-41B5F7905B02} = {90DA5C6B-69FD-4815-97CC-7AFD310C7B8D}
 		{35CA1042-D42E-4A05-BC3D-BFFDECE03869} = {90DA5C6B-69FD-4815-97CC-7AFD310C7B8D}
+		{22074C7F-BDDE-415C-8580-396AFC33828D} = {6FB844EB-AE25-4D12-BA54-FEDB9A69AF75}
 		{6547D4D1-BCDE-4117-BE88-1795DCA0E586} = {22074C7F-BDDE-415C-8580-396AFC33828D}
 		{ED991A93-6D3B-4AC4-B2A6-279E3AD76C88} = {22074C7F-BDDE-415C-8580-396AFC33828D}
 	EndGlobalSection
