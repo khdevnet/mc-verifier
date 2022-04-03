@@ -1,16 +1,16 @@
-# Message contract verifier .Net
+# .Net Message contract verifier 
 This is verification contract library. It provides implementations that make it possible to run message contracts tests.
 * It verify message schema and prevent unexpected changes. 
-* It verify consumer message schema agains producer messages.
+* It verify producer message using concumers contracts.
 
 # Why Use This Library?
-* It removes dependencies between microservices while using asynchronous events communication but keep contract consistency consistency.
+* It removes dependencies between microservices while using asynchronous events communication and keep contracts consistence.
 * Not need to use shared nuget packages or git submodules with message types which bring dependencies between microservices.
 * You can be sure that your messages contracts valid between microservices.
 * You notified about the issue during pipelines run and not after you update a nuget package.
 
 # How it works
-TODO: Add image
+<img src="https://github.com/khdevnet/mc-verifier/blob/master/docs/how-it-workds.png" width="550">
 
 # Getting started
 ## Consumer project
