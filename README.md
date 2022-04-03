@@ -1,4 +1,4 @@
-# Message contract verifier .net  
+# Microsrvices message contract verifier .net  
 This is verification contract library. It provides implementations that make it possible to run message contracts tests.
 * It verify message schema and prevent unexpected changes. 
 * It verify producer message using concumers contracts.
