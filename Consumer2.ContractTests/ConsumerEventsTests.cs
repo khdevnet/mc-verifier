@@ -1,4 +1,4 @@
-using ApprovalTests;
+using ApprovalTests.Namers;
 using ApprovalTests.Reporters;
 using Core;
 using System.IO;
@@ -7,6 +7,7 @@ using Xunit.Abstractions;
 
 namespace Consumer2.ContractTests
 {
+    [UseApprovalSubdirectory("Approvals")]
     [UseReporter(typeof(VisualStudioReporter))]
     public class Schemas
     {
@@ -18,16 +19,14 @@ namespace Consumer2.ContractTests
         [Fact]
         public void UserCreatedEvent()
         {
-            var schema = MessageSchema
-                 .Create(typeof(UserCreatedEvent));
-
-            Approvals.VerifyJson(schema.Json);
-
             var contractsFolder = Path.Combine(
-               FileUtils.GetSolutionDirectory(),
-               "ConsumerContracts//Consumer2");
+              FileUtils.GetSolutionDirectory(),
+              "ConsumerContracts//Consumer2");
 
-            schema.Save(contractsFolder);
+            MessageSchema
+                .Create(typeof(UserCreatedEvent))
+                .Verify()
+                .Save(contractsFolder);
         }
     }
 }
