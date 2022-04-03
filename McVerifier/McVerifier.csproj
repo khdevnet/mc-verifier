@@ -16,7 +16,7 @@
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>https://github.com/khdevnet/mc-verifier</RepositoryUrl>
     <PackageProjectUrl>https://github.com/khdevnet/mc-verifier</PackageProjectUrl>
-    <Description>Message contract testing in event-driven microservice architecture.</Description>
+    <Description>Message contract testing in event-driven microservice architecture. Message contract tests. Event, command contracts tests.</Description>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <Company>khdevnet</Company>
     <Authors>khdevnet</Authors>
