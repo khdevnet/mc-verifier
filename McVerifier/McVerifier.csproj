@@ -9,7 +9,24 @@
     <AnalysisLevel>latest-Recommended</AnalysisLevel>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
   </PropertyGroup>
-
+  <PropertyGroup>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <!-- Do not include the generator as a lib dependency -->
+    <IncludeBuildOutput>false</IncludeBuildOutput>
+    <RepositoryType>git</RepositoryType>
+    <RepositoryUrl>https://github.com/khdevnet/mc-verifier</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/khdevnet/mc-verifier</PackageProjectUrl>
+    <Description>Message Contract testing in event-driven applications.</Description>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <Company>khdevnet</Company>
+    <Authors>khdevnet</Authors>
+  </PropertyGroup>
+  <ItemGroup>
+    <None Include="..\README.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
   <ItemGroup>
     <PackageReference Include="ApprovalTests" Version="5.7.2" />
     <PackageReference Include="FluentAssertions" Version="6.5.1" />
