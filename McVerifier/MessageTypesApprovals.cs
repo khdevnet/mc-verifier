@@ -6,6 +6,10 @@ using System.Text.Json.Serialization;
 
 namespace McVerifier;
 
+/// get all consumer message contracts schemas from the folder
+/// find all producer message types in current assembly by regex pattern
+/// init producer meesage type using sample data generator
+/// and verify using consumers message contracts 
 public class MessageTypesApprovals
 {
     private readonly IMessageVerifierTestOutputLogger _logger;

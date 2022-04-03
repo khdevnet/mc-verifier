@@ -17,16 +17,12 @@ jobs:
     - name: Setup .NET
       uses: actions/setup-dotnet@v1
       with:
-        dotnet-version: 5.0.x
+        dotnet-version: 6.0.x
     - name: Restore dependencies
       run: dotnet restore
     - name: Build
       run: dotnet build --no-restore --configuration Release
-    - name: Pack with dotnet Xunit.Scenario.Extension
-      run: dotnet pack Xunit.Scenario.Extension/Xunit.Scenario.Extension.csproj --output nuget-packages --configuration Release -p:PackageVersion=${{ steps.get_version.outputs.version-without-v  }}
-    - name: Push with dotnet Xunit.Scenario.Extension
-      run: dotnet nuget push nuget-packages/Xunit.Scenario.Extension.${{ steps.get_version.outputs.version-without-v  }}.nupkg --api-key ${{ secrets.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json
-    - name: Pack with dotnet Xunit.Scenario
-      run: dotnet pack Xunit.Scenario/Xunit.Scenario.csproj --output nuget-packages --configuration Release -p:PackageVersion=${{ steps.get_version.outputs.version-without-v  }}
-    - name: Push with dotnet Xunit.Scenario
-      run: dotnet nuget push nuget-packages/Xunit.Scenario.${{ steps.get_version.outputs.version-without-v  }}.nupkg --api-key ${{ secrets.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json
+    - name: Pack with dotnet McVerifier
+      run: dotnet pack McVerifier/McVerifier.csproj --output nuget-packages --configuration Release -p:PackageVersion=${{ steps.get_version.outputs.version-without-v  }}
+    - name: Push with dotnet McVerifier
+      run: dotnet nuget push nuget-packages/McVerifier.${{ steps.get_version.outputs.version-without-v  }}.nupkg --api-key ${{ secrets.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json

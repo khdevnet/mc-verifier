@@ -14,13 +14,14 @@ public class Schemas
     [Fact]
     public void UserCreatedEvent()
     {
+        // Folder where generated json schema contract file will be save.
         var contractsFolder = Path.Combine(
             FileUtils.GetSolutionDirectory(),
             "ConsumerContracts//Consumer1");
 
         MessageSchema
             .Create(typeof(UserCreatedEvent))
-            .Verify()
-            .Save(contractsFolder);
+            .Verify() // Verify message json schema using ApprovalTests
+            .Save(contractsFolder); // if verification successful then save schema
     }
 }
